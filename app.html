@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Studio — [NOM DU SITE]</title>
+  <meta name="robots" content="noindex">
+  <link rel="stylesheet" href="assets/style.css">
+  <link rel="stylesheet" href="assets/app.css">
+</head>
+<body class="app-body">
+
+  <!-- ================= MENU DE GAUCHE ================= -->
+  <aside class="sidebar" id="sidebar">
+    <a href="index.html" class="logo"><span data-site="name">[NOM DU SITE]</span></a>
+
+    <div class="credit-box">
+      <div><span class="credit-label">Crédits</span><strong id="credits">…</strong></div>
+      <button class="mini-btn" onclick="openPlans()">Recharger</button>
+    </div>
+
+    <nav class="side-nav">
+      <a href="#studio" data-view="studio">✦ Studio</a>
+      <a href="#" onclick="openPlans(); return false;">▣ Abonnement</a>
+      <a href="#invite" data-view="invite">♥ Invite et gagne</a>
+      <a href="#historique" data-view="historique">↺ Historique</a>
+      <a href="index.html#faq">? FAQ</a>
+      <a href="#" id="discord-link" style="display:none" target="_blank" rel="noopener">◎ Discord</a>
+    </nav>
+
+    <div class="plan-box">
+      <span class="credit-label">Ta formule</span>
+      <strong id="plan-name">…</strong>
+      <button class="btn btn-primary btn-block" style="margin-top:10px;padding:10px" onclick="openPlans()">Voir les formules</button>
+    </div>
+
+    <div class="side-user">
+      <span id="user-email">…</span>
+      <a href="#" onclick="logout(); return false;">Déconnexion</a>
+    </div>
+  </aside>
+
+  <button class="side-toggle" onclick="document.getElementById('sidebar').classList.toggle('open')">☰</button>
+
+  <!-- ================= CONTENU ================= -->
+  <main class="app-main">
+
+    <!-- ---------- STUDIO ---------- -->
+    <section class="view" id="view-studio">
+      <div class="studio">
+        <div class="mode-toggle">
+          <button class="active" data-mode="photo" onclick="setMode('photo')">Photo</button>
+          <button data-mode="video" onclick="setMode('video')">Vidéo</button>
+        </div>
+
+        <!-- Photo principale -->
+        <label class="drop" id="drop-main">
+          <input type="file" accept="image/*" hidden onchange="pickFile(event, 'main')">
+          <div class="drop-empty" id="main-empty">
+            <div class="drop-icon">⇪</div>
+            <strong>TA PHOTO</strong>
+            <small>Touche pour importer (JPG ou PNG, 10 Mo max)</small>
+          </div>
+          <img id="main-preview" alt="Ta photo" hidden>
+        </label>
+
+        <!-- Photo de référence (optionnelle, mode photo) -->
+        <details class="panel" id="ref-panel">
+          <summary>+ Ajouter une photo de référence <span class="tag">OPTIONNEL</span></summary>
+          <label class="drop small">
+            <input type="file" accept="image/*" hidden onchange="pickFile(event, 'ref')">
+            <div class="drop-empty" id="ref-empty"><small>Un objet, une tenue, un décor à intégrer</small></div>
+            <img id="ref-preview" alt="Photo de référence" hidden>
+          </label>
+          <p class="hint">Interdit : ajouter une personne réelle identifiable sans son accord.</p>
+        </details>
+
+        <textarea id="prompt" maxlength="1000" placeholder="Décris précisément la modification (ex : remplace l'arrière-plan par une rue de Tokyo la nuit)…"></textarea>
+
+        <!-- Inspirations : images et textes dans assets/config.js -->
+        <details class="panel">
+          <summary>Voir les inspirations</summary>
+          <div class="inspi-grid" id="inspi-grid"></div>
+        </details>
+
+        <p class="cost-line" id="cost-line"></p>
+        <button class="btn btn-primary btn-block" id="gen-btn" onclick="generate()">Générer</button>
+
+        <!-- Résultat -->
+        <div class="result" id="result" hidden>
+          <p id="result-status"></p>
+          <div id="result-media"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ---------- HISTORIQUE ---------- -->
+    <section class="view" id="view-historique" hidden>
+      <h1 class="app-title">Historique</h1>
+      <div class="history-grid" id="history-grid"></div>
+    </section>
+
+    <!-- ---------- INVITE ET GAGNE ---------- -->
+    <section class="view" id="view-invite" hidden>
+      <h1 class="app-title">Invite et gagne</h1>
+      <div class="panel open-panel">
+        <p>[Texte à écrire : ex. Invite un ami : quand il prend un abonnement, tu reçois 10 crédits.]</p>
+        <p class="hint">Le système de parrainage sera branché à l'étape 3.</p>
+      </div>
+    </section>
+  </main>
+
+  <!-- ================= FENÊTRE D'ABONNEMENT ================= -->
+  <div class="modal" id="plans-modal" hidden>
+    <div class="modal-card">
+      <div class="modal-head">
+        <button class="modal-close" onclick="closePlans()" aria-label="Fermer">✕</button>
+        <h2>Choisir un abonnement</h2>
+        <p class="modal-msg" id="modal-msg">Sans engagement · résiliable à tout moment</p>
+      </div>
+      <div class="modal-body">
+        <div class="billing-toggle" id="modal-toggle">
+          <button class="active" data-period="monthly" onclick="setPeriod('monthly')">Mensuel</button>
+          <button data-period="yearly" onclick="setPeriod('yearly')">Annuel</button>
+        </div>
+        <div class="plans" id="modal-plans"></div>
+        <p class="plans-note">
+          Paie avec la même adresse email que ton compte (<strong id="modal-email"></strong>) pour recevoir tes crédits automatiquement.<br>
+          Résiliation en quelques clics, accès maintenu jusqu'à la fin de la période payée. <a href="cgv.html" style="text-decoration:underline">CGV</a>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+  <script src="assets/config.js"></script>
+  <script src="assets/app.js"></script>
+</body>
+</html>

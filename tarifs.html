@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tarifs — [NOM DU SITE]</title>
+  <meta name="description" content="Découvre nos formules. Sans engagement, résiliable à tout moment.">
+  <link rel="stylesheet" href="assets/style.css">
+</head>
+<body>
+  <div id="header"></div>
+
+  <section>
+    <div class="container">
+      <h1 class="section-title">Choisis ta formule</h1>
+      <p class="section-sub">Sans engagement · Résiliable à tout moment · Paiement sécurisé</p>
+
+      <!-- Bascule mensuel / annuel -->
+      <div class="billing-toggle">
+        <button class="active" data-mode="monthly">Mensuel</button>
+        <button data-mode="yearly">Annuel</button>
+      </div>
+
+      <!--
+        COMMENT MODIFIER LES PRIX :
+        - data-monthly-price / data-monthly-billed = affichage en mode mensuel
+        - data-yearly-price  / data-yearly-billed  = affichage en mode annuel
+        Règle : le montant affiché EN GROS doit être celui réellement prélevé.
+      -->
+      <div class="plans">
+        <div class="plan"
+          data-monthly-price="[9,90 €]<small> /mois</small>"
+          data-monthly-billed="Prélevé chaque mois"
+          data-yearly-price="[99 €]<small> /an</small>"
+          data-yearly-billed="Prélevé en une fois, soit [8,25 €]/mois">
+          <h3>[Formule 1]</h3>
+          <p class="desc">[Pour découvrir le service]</p>
+          <div class="price">[9,90 €]<small> /mois</small></div>
+          <div class="billed">Prélevé chaque mois</div>
+          <ul>
+            <li>[X crédits par mois]</li>
+            <li>[Qualité HD]</li>
+            <li>[Avantage 3]</li>
+            <li>[Avantage 4]</li>
+          </ul>
+          <a href="inscription.html" class="btn btn-ghost btn-block">Choisir</a>
+        </div>
+
+        <div class="plan featured"
+          data-monthly-price="[19,90 €]<small> /mois</small>"
+          data-monthly-billed="Prélevé chaque mois"
+          data-yearly-price="[199 €]<small> /an</small>"
+          data-yearly-billed="Prélevé en une fois, soit [16,58 €]/mois">
+          <span class="pill">LE PLUS CHOISI</span>
+          <h3>[Formule 2]</h3>
+          <p class="desc">[Pour les utilisateurs réguliers]</p>
+          <div class="price">[19,90 €]<small> /mois</small></div>
+          <div class="billed">Prélevé chaque mois</div>
+          <ul>
+            <li>[X crédits par mois]</li>
+            <li>[Qualité supérieure]</li>
+            <li>[Sans filigrane]</li>
+            <li>[Avantage 4]</li>
+            <li>[Avantage 5]</li>
+          </ul>
+          <a href="inscription.html" class="btn btn-primary btn-block">Choisir</a>
+        </div>
+
+        <div class="plan"
+          data-monthly-price="[39,90 €]<small> /mois</small>"
+          data-monthly-billed="Prélevé chaque mois"
+          data-yearly-price="[399 €]<small> /an</small>"
+          data-yearly-billed="Prélevé en une fois, soit [33,25 €]/mois">
+          <h3>[Formule 3]</h3>
+          <p class="desc">[Pour les gros utilisateurs]</p>
+          <div class="price">[39,90 €]<small> /mois</small></div>
+          <div class="billed">Prélevé chaque mois</div>
+          <ul>
+            <li>[X crédits par mois — indiquer la limite réelle]</li>
+            <li>[Vidéo IA]</li>
+            <li>[Génération prioritaire]</li>
+            <li>[Support prioritaire]</li>
+            <li>[Avantage 5]</li>
+          </ul>
+          <a href="inscription.html" class="btn btn-ghost btn-block">Choisir</a>
+        </div>
+      </div>
+
+      <p class="plans-note">
+        Packs de crédits supplémentaires disponibles depuis ton espace.
+        Voir les <a href="cgv.html" style="text-decoration:underline">conditions générales de vente</a>.
+      </p>
+    </div>
+  </section>
+
+  <div id="footer"></div>
+  <script src="assets/config.js"></script>
+  <script src="assets/main.js"></script>
+</body>
+</html>
